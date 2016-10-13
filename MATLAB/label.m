@@ -1,6 +1,6 @@
 close all;
-n = 50;
-P = getSlice(n, 3*pi/2);
+n = 10;
+[P,tri,edge] = getSlice(n, 3*pi/2);
 x = P(:,1);
 y = P(:,2);
 dt = delaunayTriangulation(x,y);
