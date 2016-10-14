@@ -1,4 +1,4 @@
-function I = line_quadrature(a,b,Nq,g)
+function I = quadrature1D(a,b,Nq,g)
 %LINE_QUADRATURE Summary of this function goes here
 %   Detailed explanation goes here
 qr = {0                         , 2;
