@@ -1,5 +1,5 @@
 close all;
-n = 10;
+n = 50;
 [P,tri,edge] = getSlice(n, 3*pi/2);
 x = P(:,1);
 y = P(:,2);

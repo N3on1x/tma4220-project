@@ -12,7 +12,9 @@ qr = {0                         , 2;
 [t_p, w] = qr{Nq,:};
 
 r = @(t) a + (b-a).*(1+t)/2;
-I = 0;
+[m,n] = size(g(a));
+I = zeros(m,n);
+
 for i = 1:Nq
     I = I + g(r(t_p(i)))*w(i);
 end
