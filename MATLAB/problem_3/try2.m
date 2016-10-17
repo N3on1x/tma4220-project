@@ -54,12 +54,12 @@ for i = 1:nk
             sub_mat = zeros(np, np-1);
             sub_mat(comb,:) = eye(np-1);
             sub_phi = @(x) sub_mat'*phi(x,0);
-            b(nodes) = b(nodes) + quadrature1D(p(nodes(1))',p(nodes(2))', 4, @(x) sub_phi(x)*g_x(x));
+            b(nodes) = b(nodes) + quadrature1D(p(nodes(1),1)',p(nodes(2),1)', 4, @(x) sub_phi(x)*g_x(x));
         elseif sum(ismember(nodes, n_n_y)) == np-1
             sub_mat = zeros(np, np-1);
             sub_mat(comb,:) = eye(np-1);
             sub_phi = @(y) sub_mat'*phi(0,y);
-            b(nodes) = b(nodes) + quadrature1D(p(nodes(1))',p(nodes(2))', 4, @(y) sub_phi(y)*g_y(y));
+            b(nodes) = b(nodes) + quadrature1D(p(nodes(1),2)',p(nodes(2),2)', 4, @(y) sub_phi(y)*g_y(y));
         end
     end
     
