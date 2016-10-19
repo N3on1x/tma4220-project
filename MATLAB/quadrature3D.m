@@ -24,7 +24,8 @@ for q = 1:Nq
     I = I + g(lb(q,:)*(p(1,:)'), lb(q,:)*(p(2,:)'), lb(q,:)*(p(3,:)'))*w(q);
 end
 
-volume = abs(det([(p2-p1)' (p3-p1)' (p4-p1)']))/6; % Volume of a tetrahedron
+%volume = abs(det([(p2-p1)' (p3-p1)' (p4-p1)']))/6; % Volume of a tetrahedron
+volume = abs(det([p; ones(1,4)]))/6;
 I = volume*I;
 end
 

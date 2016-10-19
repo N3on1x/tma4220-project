@@ -1,10 +1,10 @@
-% Gir ikke riktig svar, usikker p? hvorfor.
+% Gir riktig svar, sikker p? hvorfor.
 
 close all; clc;
 
-f = @(x,y,z) -12*pi^2*sin(2*pi*x).*sin(2*pi*y).*sin(2*pi*z);
+f = @(x,y,z) 12*pi^2*sin(2*pi*x).*sin(2*pi*y).*sin(2*pi*z);
 
-n_w = 4;
+n_w = 20;
 [p, tet, edge] = getBox(n_w);
 [n, n_d] = size(p);
 
@@ -26,12 +26,11 @@ for i = 1:nk
     b(k') = b(k') + b_local;
 end
 
-% Boundry conditions
+% Dirichlet boundry conditions
 edg = unique(edge);
-n_e = length(edg);
-A(edg,:) = zeros(n_e,n);
-A(edg,edg) = eye(n_e);
-b(edg) = zeros(n_e,1);
+A(edg,:) = [];
+A(:,edg) = [];
+b(edg) = [];
 
 u_h = A\b; % Solve the system
 
@@ -39,4 +38,5 @@ x = p(:,1);
 y = p(:,2);
 z = p(:,3);
 u = sin(2*pi*x).*sin(2*pi*y).*sin(2*pi*z);
+u(edg) = [];
 err = norm(u-u_h, inf);
