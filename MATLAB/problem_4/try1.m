@@ -4,7 +4,7 @@ close all; clc;
 
 f = @(x,y,z) 12*pi^2*sin(2*pi*x).*sin(2*pi*y).*sin(2*pi*z);
 
-n_w = 20;
+n_w = 15;
 [p, tet, edge] = getBox(n_w);
 [n, n_d] = size(p);
 
