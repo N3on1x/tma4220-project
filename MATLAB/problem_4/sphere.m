@@ -26,6 +26,7 @@ for i = 1:nk
     b(k') = b(k') + b_local;
 end
 
+% Analytical solution
 x = p(:,1);
 y = p(:,2);
 z = p(:,3);
