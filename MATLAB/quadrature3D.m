@@ -17,13 +17,15 @@ qr = {[1/4, 1/4, 1/4, 1/4], 1;
      };
 
 [lb, w] = qr{Nq, :};
-
-I = 0;
+p = [p1' p2' p3' p4'];
+[m,n] = size(g(p1(1),p1(2),p1(3)));
+I = zeros(m,n);
 for q = 1:Nq
-    I = I + g(lb(q,:)*[p1' p2' p3' p4']')*w(q);
+    I = I + g(lb(q,:)*(p(1,:)'), lb(q,:)*(p(2,:)'), lb(q,:)*(p(3,:)'))*w(q);
 end
 
-volume = abs(det([(p2-p1)' (p3-p1)' (p4-p1)']))/6; % Volume of a tetrahedron
+%volume = abs(det([(p2-p1)' (p3-p1)' (p4-p1)']))/6; % Volume of a tetrahedron
+volume = abs(det([p; ones(1,4)]))/6;
 I = volume*I;
 end
 

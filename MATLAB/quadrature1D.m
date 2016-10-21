@@ -1,5 +1,5 @@
 function I = quadrature1D(a,b,Nq,g)
-%UNTITLED2 Summary of this function goes here
+%LINE_QUADRATURE Summary of this function goes here
 %   Detailed explanation goes here
 qr = {0                         , 2;
      [-sqrt(1/3), sqrt(1/3)]    , [1, 1];
@@ -9,6 +9,13 @@ qr = {0                         , 2;
      [(18-sqrt(30))/36, (18+sqrt(30))/36,...
       (18+sqrt(30))/36, (18-sqrt(30))/36]};
 
-[x, w] = qr{Nq,:};
-I = (b-a)/2 * w * g((b-a)/2 * x' + (a+b)/2);
+[t_p, w] = qr{Nq,:};
+
+r = @(t) a + (b-a).*(1+t)/2;
+[m,n] = size(g(a));
+I = zeros(m,n);
+
+for i = 1:Nq
+    I = I + g(r(t_p(i)))*w(i);
 end
+I = norm(b-a)/2*I;

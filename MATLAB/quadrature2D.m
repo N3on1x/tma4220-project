@@ -10,10 +10,12 @@ qr = {[1/3 1/3 1/3], 1;
      };
 
 [lb, w] = qr{Nq, :};
-I = 0;
+p = [p1' p2' p3'];
+[m,n] = size(g(p1(1),p1(2)));
+I = zeros(m,n);
 
 for q = 1:Nq
-    I = I + g(lb(q,:)*[p1' p2' p3']')*w(q);
+    I = I + g(lb(q,:)*(p(1,:)'), lb(q,:)*(p(2,:)'))*w(q);
 end
 
 area = abs(det([(p2-p1)' (p3-p1)']))/2; % area of a triangle
