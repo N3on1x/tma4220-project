@@ -4,7 +4,7 @@ close all; clc;
 
 f = @(x,y,z) 12*pi^2*sin(2*pi*x).*sin(2*pi*y).*sin(2*pi*z);
 
-n = 1000;
+n = 500;
 [p, tet, edge] = getSphere(n);
 [n, n_d] = size(p);
 
