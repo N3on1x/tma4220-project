@@ -33,13 +33,14 @@ z = p(:,3);
 u = sin(2*pi*x).*sin(2*pi*y).*sin(2*pi*z);
 
 % Dirichlet boundry conditions
-edg = unique(edge);
-n_edg = length(edg);
-A(edg,:) = zeros(n_edg,n);
-A(edg,edg) = eye(n_edg);
-b(edg) = u(edg);
+edg = unique(edge); % Boundry nodes
+intr = setdiff(1:n,edg); % Internal nodes
+c = A(intr,edg)*u(edg);
+A(edg,:) = [];
+A(:,edg) = [];
+b(edg) = [];
 
-u_h = A\b; % Solve the system
+u_h = A\(b-c); % Solve the system
 
+u(edg) = [];
 err = norm(u-u_h, inf);
-tetramesh(tet,p);
