@@ -4,7 +4,7 @@ close all; clc;
 
 f = @(x,y,z) 12*pi^2*sin(2*pi*x).*sin(2*pi*y).*sin(2*pi*z);
 
-n = 100;
+n = 5000;
 [p, tet, edge] = getSphere(n);
 [n, n_d] = size(p);
 
@@ -42,4 +42,3 @@ b(edg) = u(edg);
 u_h = A\b; % Solve the system
 
 err = norm(u-u_h, inf);
-tetramesh(tet,p);
