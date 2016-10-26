@@ -34,8 +34,8 @@ u = sin(2*pi*x).*sin(2*pi*y).*sin(2*pi*z);
 
 % Dirichlet boundry conditions
 edg = unique(edge); % Boundry nodes
-intr = setdiff(1:n,edg); % Internal nodes
-c = A(intr,edg)*u(edg);
+intn = setdiff(1:n,edg); % Internal nodes
+c = A(intn,edg)*u(edg);
 A(edg,:) = [];
 A(:,edg) = [];
 b(edg) = [];

@@ -1,5 +1,6 @@
 % Heat equation on a rod of length L with initial conditions
 % f = @(x) 6*sin(pi*x/L); and homogenous dirichlet boundry conditions.
+% Known analytic solution u = @(x,t) 6*sin(pi*x/L).*exp(-alpha*(pi/L)^2*t)
 
 close all; clc;
 L = 1;
@@ -44,7 +45,7 @@ x = x(2:n-1);
 u_h = f(x)';
 t_end = 1; % End time
 for i = 0:h:t_end
-    u_h = (M+h*A)\M*u_h; % Backward Euler
+    u_h = (2*M+h*A)\((2*M-h*A)*u_h); % CN
 end
 plot(x,u_h)
 hold on;
