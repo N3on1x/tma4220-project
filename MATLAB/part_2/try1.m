@@ -47,19 +47,11 @@ M(:,edg) = [];
 %%
 
 h = 1e-2; % Time step
-u_h = 20*ones(length(intn),1); % Initial condition
 t_end = 1; % End time
 times = 0:h:t_end;
-max_u_h = zeros(1,length(times));
-min_u_h = zeros(1,length(times));
-j = 1;
-for i = h:h:t_end
-    max_u_h(j) = max(u_h);
-    min_u_h(j) = min(u_h);
-    j = j+1;
+u_h = zeros(length(intn), length(times));
+u_h(:,1) = 20*ones(length(intn),1); % Initial condition
+for i = 2:length(times)
     %u_h = (M+h/2*A)\((M-h/2*A)*u_h-h*c); % CN
-    u_h = (M+h*A)\(M*u_h-h*c);
+    u_h(:,i) = (M+h*A)\(M*u_h(:,i-1)-h*c); % Backward Euler
 end
-plot(times,max_u_h)
-hold on
-plot(times,min_u_h)
