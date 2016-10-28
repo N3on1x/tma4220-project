@@ -55,3 +55,7 @@ for i = 2:length(times)
     %u_h = (M+h/2*A)\((M-h/2*A)*u_h-h*c); % CN
     u_h(:,i) = (M+h*A)\(M*u_h(:,i-1)-h*c); % Backward Euler
 end
+
+u_h_f = bnd_d*ones(n, length(times));
+u_h_f(intn,:) = u_h;
+%writeVTF(p, tet, 'Temperature', u_h_f, 'Time', times, 'FileName', 'second1_dirichlet2.vtf');
