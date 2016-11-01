@@ -112,7 +112,7 @@ Line Loop(51) = {45, -35, 46, -32};
 //+
 Plane Surface(52) = {51};
 //+
-Extrude {0, 0, 0.55} {
+Extrude {0, 0, 1.05} {
   Surface{48, 50, 52};
 }
 //+
