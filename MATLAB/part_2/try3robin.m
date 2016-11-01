@@ -38,7 +38,7 @@ edg_r = edge(edg_ind_r,:);
 
 
 for i = 1:length(edg_r)
-    k = edg_r(i,:);
+    k = edg_r(i,:); % Current triangle on the Robin boundry
     phi_sys = [[p(k,:); zeros(1,np-1)] ones(np, 1)];
     coeff_mat = phi_sys\eye(np); % Collumn i is [a_i; b_i; c_i; d_i]
     coeff_mat(:,np) = [];
