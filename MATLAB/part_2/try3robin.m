@@ -9,6 +9,7 @@ edge = data_edge(:,1:3);
 [n, nd] = size(p); % Number of points n in dimension nd
 [nk, np] = size(tet); % Number of elements nk and points per element np
 
+% Physical properties of the problem
 h_tr = 1; % Transfer coefficient between copper and air
 k_cu = 1; % Thermal conductivity of copper.
 T_amb = 20; % Air temperature
