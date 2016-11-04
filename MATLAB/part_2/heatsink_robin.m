@@ -1,8 +1,17 @@
 clc; close all; clear all;
+% Select mesh
+meshopts = {'h055_gmf003','h055_gmf005','h105_gmf003','h405_gmf003','h405_gmf005'};
+[Selection, status] = listdlg('PromptString','Select mesh',...
+    'SelectionMode','single',...
+    'ListString',meshopts);
+
 % Load the mesh
-data_nodes = dlmread('../../Meshes/heatsink055_nodes.m');
-data_tet = dlmread('../../Meshes/heatsink055_tetr.m');
-data_edge = dlmread('../../Meshes/heatsink055_tri_new.m');
+
+dir_name = strcat('../../Meshes/heatsink_',meshopts{Selection});
+data_nodes = dlmread(strcat(dir_name,'_nodes.m'));
+data_tet = dlmread(strcat(dir_name,'_tetr.m'));
+data_edge = dlmread(strcat(dir_name,'_tri_new.m'));
+
 p = data_nodes(:,2:end);
 tet = data_tet(:,1:4);
 edge = data_edge(:,1:3);
