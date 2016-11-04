@@ -1,8 +1,8 @@
 clc; close all; clear all;
 % Load the mesh
-data_nodes = dlmread('../../Meshes/heatsink105_nodes.m');
-data_tet = dlmread('../../Meshes/heatsink105_tetr.m');
-data_edge = dlmread('../../Meshes/heatsink105_tri_new.m');
+data_nodes = dlmread('../../Meshes/heatsink055_nodes.m');
+data_tet = dlmread('../../Meshes/heatsink055_tetr.m');
+data_edge = dlmread('../../Meshes/heatsink055_tri_new.m');
 p = data_nodes(:,2:end);
 tet = data_tet(:,1:4);
 edge = data_edge(:,1:3);
