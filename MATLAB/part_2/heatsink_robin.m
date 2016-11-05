@@ -1,16 +1,15 @@
 clc; close all; clear all;
 % Select mesh
-meshopts = {'h055_gmf003','h055_gmf005','h105_gmf003','h405_gmf003','h405_gmf005'};
+meshopts = {'heatsink4_h105_gmf005','heatsink4_h205_gmf005','heatsink8_h105_gmf005','heatsink8_h205_gmf005'};
 [Selection, status] = listdlg('PromptString','Select mesh',...
     'SelectionMode','single',...
     'ListString',meshopts);
 
 % Load the mesh
-
-dir_name = strcat('../../Meshes/heatsink_',meshopts{Selection});
+dir_name = strcat('../../Meshes/',meshopts{Selection});
 data_nodes = dlmread(strcat(dir_name,'_nodes.m'));
 data_tet = dlmread(strcat(dir_name,'_tetr.m'));
-data_edge = dlmread(strcat(dir_name,'_tri_new.m'));
+data_edge = dlmread(strcat(dir_name,'_tri.m'));
 
 p = data_nodes(:,2:end);
 tet = data_tet(:,1:4);
@@ -40,10 +39,10 @@ for i = 1:nk
 end
 
 % Split the edge into the different boundries
-edge_d_ind   = find(data_edge(:,5) == 1);
-edge_r_ind_z = find(data_edge(:,5) == 2);
-edge_r_ind_x = find(data_edge(:,5) == 4);
-edge_r_ind_y = find(data_edge(:,5) == 3);
+edge_d_ind   = find(data_edge(:,4) == 1);
+edge_r_ind_z = find(data_edge(:,4) == 2);
+edge_r_ind_x = find(data_edge(:,4) == 4);
+edge_r_ind_y = find(data_edge(:,4) == 3);
 
 edge_d   = edge(edge_d_ind,:);
 edge_r_x = edge(edge_r_ind_x,:);
