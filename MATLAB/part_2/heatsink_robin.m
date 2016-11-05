@@ -6,7 +6,7 @@ meshopts = {'heatsink4_h105_gmf005','heatsink4_h205_gmf005','heatsink8_h105_gmf0
     'ListString',meshopts);
 
 % Load the mesh
-dir_name = strcat('../../Meshes/',meshopts{Selection});
+dir_name = strcat('../../Meshes/meshfiles/',meshopts{Selection});
 data_nodes = dlmread(strcat(dir_name,'_nodes.m'));
 data_tet = dlmread(strcat(dir_name,'_tetr.m'));
 data_edge = dlmread(strcat(dir_name,'_tri.m'));
@@ -105,3 +105,4 @@ b(d_nodes) = [];
 
 u_h = bnd_d*ones(n,1);
 u_h(not_d_nodes) = A\(b-c);
+writeVTF(p,tet,'Temperature', u_h, 'FileName', strcat('output/', meshopts{Selection}, '.vtf'))

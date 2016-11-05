@@ -1,0 +1,9 @@
+% !TEX root = ../main/main.tex
+\section{Theory}
+The heat equation
+\begin{alignat}{3}
+	k\laplacian{u} &= \pdv{u}{t} &&,\quad u \in \Omega \\
+	u &= u_0 &&,\quad u \in \partial\Omega_D \\
+	\pdv{u}{n} &= -h\left(u - u_{amb} \right) &&, \quad u \in \partial\Omega_R.
+\end{alignat}
+Where $k = \SI{401}{\watt\per\meter\per\kelvin}$ is the thermal conductivity of copper, and $h \approx 4$
