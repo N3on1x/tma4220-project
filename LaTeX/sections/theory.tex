@@ -1,9 +1,47 @@
 % !TEX root = ../main/main.tex
 \section{Theory}
-The heat equation
+\subsection{The problem}
+The heat equation on a general domain is given as
+\begin{equation}
+	k\laplacian{u(\vb{x},t)} = \pdv{u(\vb{x},t)}{t}
+	\label{eq:gen_heat_eq},
+\end{equation}
+with the Dirichlet condition $u(\vb{x},t) = g(\vb{x},t)$ on the boundary, for some given function $g$. If we insetad look at the stationary case, the right hand side of \eqref{eq:gen_heat_eq} becomes zero. In addition if instead of looking at the inhomogenous Dirichlet boundary condition.
+
+Let $\Omega \subset \mathbb{R}^n$ be bounded, open set, and let $u(\vb{x})$ satisfy the boundary value problem 
+
 \begin{alignat}{3}
-	k\laplacian{u} &= \pdv{u}{t} &&,\quad u \in \Omega \\
-	u &= u_0 &&,\quad u \in \partial\Omega_D \\
-	\pdv{u}{n} &= -h\left(u - u_{amb} \right) &&, \quad u \in \partial\Omega_R.
+	\laplacian{u(\vb{x})} &= 0 &&,\quad u(\vb{x}) \in \Omega \\
+	u(\vb{x}) &= u_0 &&,\quad u \in \partial\Omega_D \\
+	k\pdv{u(\vb{x})}{n} &= -h\left(u(\vb{x}) - u_{amb} \right) &&, \quad u \in \partial\Omega_R.
+	\label{eq:heat_bvp}
 \end{alignat}
-Where $k = \SI{401}{\watt\per\meter\per\kelvin}$ is the thermal conductivity of copper, and $h \approx 4$
+Here the temperature $u_0$ and the ambient temperature $u_{amb}$ are fixed, while $h$ is the heat transfer coefficient between two materials. $\partial\Omega_D$ and $\partial\Omega_R$ denotes the part Dirichlet and Robin part of the boundary $\partial\Omega = \partial\Omega_D\cup\Omega_R$, respectively. In the Robin boundary condition  $\vb{n}$ is the outward normal unit vector. The term $\pdv*{u}{n}$ is the heat flux, and is in this model proportional to the temperature difference between the ambient temperature and the solution. The minus sign emphasizes that the heat is flowing in the opposite direction of the temperature gradient, which is reasonable.
+
+\subsection{Weak form}
+The finite element method requires the PDE to to be formulated in terms of its weak form. We introduce the set of test functions $C_0^\infty(\Omega)$. This is the set of all infinitely differentiable functions with compact support in $\Omega$. $V = H_0^1(\Omega)$ is the usual Sobolov space. By Green's formula we have
+\begin{equation}
+	\int_\Omega \! v\laplacian{u} \, \mathrm{d}\Omega = \int_{\partial\Omega} \! v\pdv{u}{n} \, \mathrm{d}\gamma -  \int_\Omega \! \grad{u}\cdot\grad{v} \, \mathrm{d}\Omega = 0
+	\label{eq:green}.
+\end{equation}
+The boundary integral is split up into the $\partial\Omega_D$ and $\partial\Omega_R$. If then $v \in V$, then the integral over $\partial\Omega_D$ vanishes and, by collecting terms, \eqref{eq:green} reduces to 
+\begin{equation}
+	\frac{k}{h}\int_\Omega \! \grad{u}\cdot\grad{v} \, \mathrm{d}\Omega + \int_{\partial\Omega_R} \! uv\, \mathrm{d}\gamma = u_{amb}\int_{\partial\Omega_R} \! v \, \mathrm{d}\gamma.
+	\label{eq:weak_form}
+\end{equation}
+Note that because of the inhomogeneous Dirichlet boundary conditions $u \notin V$, even though the proper weak formulation should state: Find $u \in V$ such that \eqref{eq:weak_form} is satisfied $\forall v \in V$. Formally one should explicitly introduce a lifting function $R$ such that a new function $\mathring{u} = u - R$ satisfies the homogeneous Dirichlet conditions, and formulate the weak form in terms of $\mathring{u}$. However, in our numerical scheme we will get the desired solution by setting the solution of our linear system to the known Dirichlet boundary values.
+
+From \eqref{eq:weak_form} we see that our bilinear form $a(\cdot,\cdot)$ and linear functional $F(\cdot)$ are
+\begin{align}
+	a(u,v) &= \frac{k}{h}\int_\Omega \! \grad{u}\cdot\grad{v} \, \mathrm{d}\Omega + \int_{\partial\Omega_R} \! uv\, \mathrm{d}\gamma \\
+	F(v) &= u_{amb}\int_{\partial\Omega_R} \! v \, \mathrm{d}\gamma.
+\end{align}
+Given a set of points $\left\{\vb{x}_i\right\}_{i=1}^n$ in $\Omega$, we now define a set of nodal functions $\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, such that $\varphi_i(\vb{x}_j) = \delta_{ij}$, $i,j = 1,\dots,n$. Now we define $V_h = \operatorname{span}\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, and let $u_h(\vb{x}) = \sum_{i=1}^{n} u_i \varphi_i(\vb{x}) \in V_h$. The Galerkin problem can now be formulated as "Find $u_h \in V_h$ such that $a(u_h,v) = F(v)\, \forall v \in V_h$". Since $a(\cdot,\cdot)$ is bilinear, $F(\cdot)$ is linear and $u_h$  is a linear combination of the basis functions $\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, this problem is equivalent to the linear system
+\begin{equation}
+	A\vb{u} = \vb{b}, \quad A_{ij} = a(\varphi_i,\varphi_j), \,\, b_i = F(\varphi_i)
+	\label{eq:lin_sys},
+\end{equation}
+with $\vb{u}$ being the vector with elements corresponding to the coefficients $u_i$ of $u_h$. We note that since we have not yet enforced the Dirichlet boundary conditions, the solution is not unique, hence $A$ is not invertible in its current form.
+
+\subsection{Barycentric coordinates}
+%Where $k = \SI{401}{\watt\per\meter\per\kelvin}$ is the thermal conductivity of copper, and $h \approx 10$
