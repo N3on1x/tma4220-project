@@ -31,10 +31,11 @@ The boundary integral is split up into the $\partial\Omega_D$ and $\partial\Omeg
 \end{equation}
 Note that because of the inhomogeneous Dirichlet boundary conditions $u \notin V$, even though the proper weak formulation should state: Find $u \in V$ such that \eqref{eq:weak_form} is satisfied $\forall v \in V$. Formally one should explicitly introduce a lifting function $R$ such that a new function $\mathring{u} = u - R$ satisfies the homogeneous Dirichlet conditions, and formulate the weak form in terms of $\mathring{u}$. However, in our numerical scheme we will get the desired solution by setting the solution of our linear system to the known Dirichlet boundary values.
 
-From \eqref{eq:weak_form} we see that our bilinear form $a(\cdot,\cdot)$ and linear functional $F(\cdot)$ are
+From \eqref{eq:weak_form} we see that our bilinear form $a(\cdot,\cdot)$ and linear functional $F(\cdot)$ takes the form
 \begin{align}
 	a(u,v) &= \frac{k}{h}\int_\Omega \! \grad{u}\cdot\grad{v} \, \mathrm{d}\Omega + \int_{\partial\Omega_R} \! uv\, \mathrm{d}\gamma \\
 	F(v) &= u_{amb}\int_{\partial\Omega_R} \! v \, \mathrm{d}\gamma.
+	\label{eq:bilin_form}
 \end{align}
 Given a set of points $\left\{\vb{x}_i\right\}_{i=1}^n$ in $\Omega$, we now define a set of nodal functions $\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, such that $\varphi_i(\vb{x}_j) = \delta_{ij}$, $i,j = 1,\dots,n$. Now we define $V_h = \operatorname{span}\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, and let $u_h(\vb{x}) = \sum_{i=1}^{n} u_i \varphi_i(\vb{x}) \in V_h$. The Galerkin problem can now be formulated as "Find $u_h \in V_h$ such that $a(u_h,v) = F(v)\, \forall v \in V_h$". Since $a(\cdot,\cdot)$ is bilinear, $F(\cdot)$ is linear and $u_h$  is a linear combination of the basis functions $\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, this problem is equivalent to the linear system
 \begin{equation}

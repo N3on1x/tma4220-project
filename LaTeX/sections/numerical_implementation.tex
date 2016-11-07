@@ -1,2 +1,46 @@
 % !TEX root = ../main/main.tex
 \section{Numerical implementation}
+\subsection{Basis functions}
+The choice of the type of basis functions is important when implementing the finite element method. In this project we have settled for the simplest type, namely the linear type. In higher dimensions one would usually resort to reference functions in a reference space, however for linear basis functions looking at the physical space is "cool". The linear functions in $\mathbb{R}^3$ is of the form
+\begin{equation}
+	\varphi_i(x,y,z) = a_ix + b_iy + c_iz + d_i,
+\end{equation}
+where the index $i$ refers to the node. In a nodal basis we want $\varphi_i(\vb{x}_j) = \delta_{ij},\, i,j = 1,\dots,n$, and in a mesh consisting of tetrahedral elements the coefficients can be calculated per element. For instance, if $\mathcal{K}_1$ is the element being the tetrahedron given by the nodes $\{1,\dots,4\}$. Then the coefficients in $\varphi_1$ is given by the solution of the linear system
+\begin{equation}
+%
+    \begin{bmatrix}
+        x_1 & y_1 & z_1 & 1 \\
+        x_2 & y_2 & z_2 & 1 \\
+        x_3 & y_3 & z_3 & 1 \\
+        x_4 & y_4 & z_4 & 1
+     \end{bmatrix}
+     \begin{bmatrix}
+        a_1 \\
+        b_1 \\
+        c_1 \\
+        d_1 
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        1 \\
+        0 \\
+        0 \\
+        0 \\
+    \end{bmatrix}.
+%
+\end{equation}
+
+\subsection{The numerical integrals}
+$a(u,v)$ in \eqref{eq:bilin_form} contains a the gradient of the basis functions $\varphi$. However because of the linearity of the basis functions this integral will be simply be the the volume of each element, multiplied by a constant. Let $\pmb{\varphi}(\vb{x}) = \left(\varphi_1(\vb{x}),\dots,\varphi_4(\vb{x})\right)^T$ be the vector of basis function on an element $\mathcal{K}$. Then each entry in the symmetric matrix
+\begin{equation}
+    \pmb{J}_{\pmb{\varphi}}\pmb{J}_{\pmb{\varphi}}^T\int_\mathcal{K} \! \mathrm{d}V
+\end{equation}
+represent the contribution from each combination of $\grad{\varphi_i}\cdot\grad{\varphi_j}$ on $\mathcal{K}$. Here $\pmb{J}_{\pmb{\varphi}}$ is the Jacobian of $\pmb{\varphi}$. The two remaining integrals in \eqref{eq:bilin_form} are surface integrals over the boundary of $\Omega$. We can use the function \texttt{quadrature2D} to integrate over planes in $\mathbb{R}^3$ by projecting down onto $\mathbb{R}^2$. Let $\vb{p}_1,\vb{p}_2,\vb{p}_3 \in \mathbb{R}^3$. The plane going through all three points have normal vector $\vb{n} = (\vb{p}_2-\vb{p}_1)\cross (\vb{p}_3-\vb{p}_1)$. Projecting down on the $xy$-plane then yields
+\begin{equation}
+    z = z(x,y)=\frac{1}{n_3}\left(\vb{n}\cdot \vb{p}_1-n_1x-n_2y\right).
+\end{equation}
+The differential $\mathrm{d}\gamma$ on the plane then becomes
+\begin{equation}
+    \mathrm{d}\gamma = \frac{\norm{\vb{n}}}{\abs{n_3}}\mathrm{d}x\mathrm{d}y.
+\end{equation}
+The whole boundary of the mesh consists of planes normal to the all the axes, so we actually need project onto both the $xz$- and $yz$-plane as well for the different surfaces.
