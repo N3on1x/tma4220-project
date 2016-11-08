@@ -45,6 +45,17 @@ Given a set of points $\left\{\vb{x}_i\right\}_{i=1}^n$ in $\Omega$, we now defi
 with $\vb{u}$ being the vector with elements corresponding to the coefficients $u_i$ of $u_h$. We note that since we have not yet enforced the Dirichlet boundary conditions, the solution is not unique, hence $A$ is not invertible in its current form.
 
 \subsection{Barycentric coordinates and numerical integration}
-We only state the formulas for evaluating integrals numerically on simplexes using barycentric quadrature points. For an in-depth cover of this topic, we refer to \cite{quarteroni}. Let $\mathcal{\hat{K}}$ be the reference simplex in $\mathbb{R}^n$ with corners $\vb{\hat{e}_1},\dots,\vb{\hat{e}_n}$ and $\vb{0}$. Each point in $\mathcal{\hat{K}}$ can then described with a barycentric coordinate $\vb{\pmb{\lambda}} = \left(\lambda_1,\dots,\lambda_{n+1}\right)$. Then 
+We only state the formulas for evaluating integrals numerically on simplexes using barycentric quadrature points. For an in-depth cover of this topic, we refer to \cite{quarteroni}. Let $\mathcal{\hat{K}}$ be the reference simplex in $\mathbb{R}^n$ with corners $\vb{\hat{e}}_1,\dots,\vb{\hat{e}}_n$ and $\vb{0}$ and  $\mathcal{K}$ be the physical simplex with corners $\vb{p}_0,\dots,\vb{p}_n$. The integral transformation then yields 
 
+\begin{equation}
+	\int_{\mathcal{K}} \! f(\vb{x}) \, \mathrm{d}V = \int_{\mathcal{\hat{K}}} \! f(\vb{\hat{x}})\frac{1}{n!}\frac{\operatorname{Volume}(\mathcal{K})}{\operatorname{Volume}(\mathcal{\hat{K}})}\, \mathrm{d}\hat{V}.
+\end{equation}
+The volume of the simplex $\mathcal{K}$ is \cite{wiki_simplex}
+\begin{equation}
+ 	\operatorname{Volume}(\mathcal{K}) = \frac{1}{n!}\left|\operatorname{det}\left(\vb{p}_1-\vb{p}_0\,\dots\,\vb{p}_n-\vb{p}_0\right)\right|.
+ \end{equation} 
+We also note that $\operatorname{Volume}(\mathcal{\hat{K}}) = 1/n!$. Each point in $\mathcal{K}$ can be described with a barycentric coordinate $\vb{\pmb{\lambda}} = \left(\lambda_0,\dots,\lambda_{n}\right)$, with the mapping to the physical space $\vb{x} = \lambda_0\vb{p}_0 + \dots + \lambda_n\vb{p}_n$. Given a set of $m$ barycentric quadrature points, $\vb{\pmb{\lambda}}_1,\dots,\vb{\pmb{\lambda}}_m$, and corresponding weights, $\rho_1,\dots,\rho_m$, the numerical integration formula becomes
+\begin{equation}
+	\int_{\mathcal{K}} \! f(\vb{x}) \, \mathrm{d}V \approx \operatorname{Volume}(\mathcal{K})\sum_{i = 1}^m
+\end{equation}
 %Where $k = \SI{401}{\watt\per\meter\per\kelvin}$ is the thermal conductivity of copper, and $h \approx 10$
