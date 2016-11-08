@@ -21,7 +21,7 @@ edge = data_edge(:,1:3);
 h_tr = 10; % Transfer coefficient between copper and air
 k_cu = 401; % Thermal conductivity of copper.
 T_amb = 20; % Air temperature
-bnd_d = 80; % Constant Dirichlet boundry condition
+bnd_d = 80; % Constant Dirichlet boundary condition
 
 A = zeros(n);
 b = zeros(n,1);
@@ -49,9 +49,9 @@ edge_r_x = edge(edge_r_ind_x,:);
 edge_r_y = edge(edge_r_ind_y,:);
 edge_r_z = edge(edge_r_ind_z,:);
 
-% Enfore Robin boundry condition
+% Enfore Robin boundary condition
 for i = 1:length(edge_r_z)
-    k = edge_r_z(i,:); % Current triangle on the Robin boundry
+    k = edge_r_z(i,:); % Current triangle on the Robin boundary
     phi_sys = [[p(k,:); zeros(1,nd)] ones(np, 1)];
     coeff_mat = phi_sys\eye(np); % Collumn i is [a_i; b_i; c_i; d_i]
     coeff_mat(:,np) = [];
@@ -66,7 +66,7 @@ for i = 1:length(edge_r_z)
 end
 
 for i = 1:length(edge_r_y)
-    k = edge_r_y(i,:); % Current triangle on the Robin boundry
+    k = edge_r_y(i,:); % Current triangle on the Robin boundary
     phi_sys = [[p(k,:); -ones(1,nd)] ones(np, 1)];
     coeff_mat = phi_sys\eye(np); % Collumn i is [a_i; b_i; c_i; d_i]
     coeff_mat(:,np) = [];
@@ -81,7 +81,7 @@ for i = 1:length(edge_r_y)
 end
 
 for i = 1:length(edge_r_x)
-    k = edge_r_x(i,:); % Current triangle on the Robin boundry
+    k = edge_r_x(i,:); % Current triangle on the Robin boundary
     phi_sys = [[p(k,:); -ones(1,nd)] ones(np, 1)];
     coeff_mat = phi_sys\eye(np); % Collumn i is [a_i; b_i; c_i; d_i]
     coeff_mat(:,np) = [];
@@ -95,8 +95,8 @@ for i = 1:length(edge_r_x)
     b(k) = b(k) + b_local;
 end
 
-% Enforce Dirichlet boundry conditions
-d_nodes = unique(edge_d); % Dirichlet boundry nodes
+% Enforce Dirichlet boundary conditions
+d_nodes = unique(edge_d); % Dirichlet boundary nodes
 not_d_nodes = setdiff(1:n,d_nodes); % The rest of the nodes
 c = A(not_d_nodes,d_nodes)*bnd_d*ones(length(d_nodes),1);
 A(d_nodes,:) = [];

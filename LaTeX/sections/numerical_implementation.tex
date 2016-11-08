@@ -7,7 +7,6 @@ The choice of the type of basis functions is important when implementing the fin
 \end{equation}
 where the index $i$ refers to the node. In a nodal basis we want $\varphi_i(\vb{x}_j) = \delta_{ij},\, i,j = 1,\dots,n$, and in a mesh consisting of tetrahedral elements the coefficients can be calculated per element. For instance, if $\mathcal{K}_1$ is the element being the tetrahedron given by the nodes $\{1,\dots,4\}$. Then the coefficients in $\varphi_1$ is given by the solution of the linear system
 \begin{equation}
-%
     \begin{bmatrix}
         x_1 & y_1 & z_1 & 1 \\
         x_2 & y_2 & z_2 & 1 \\
@@ -27,7 +26,7 @@ where the index $i$ refers to the node. In a nodal basis we want $\varphi_i(\vb{
         0 \\
         0 \\
     \end{bmatrix}.
-%
+    \label{eq:coeff_sys}
 \end{equation}
 
 \subsection{The numerical integrals}
@@ -43,4 +42,11 @@ The differential $\mathrm{d}\gamma$ on the plane then becomes
 \begin{equation}
     \mathrm{d}\gamma = \frac{\norm{\vb{n}}}{\abs{n_3}}\mathrm{d}x\mathrm{d}y.
 \end{equation}
-The whole boundary of the mesh consists of planes normal to the all the axes, so we actually need project onto both the $xz$- and $yz$-plane as well for the different surfaces.
+The whole boundary of the mesh consists of planes normal to the all the axes, so we actually need project onto both the $xz$- and $yz$-plane as well for the different parts of the boundary.
+
+When calculating the contribution from the integrals over the boundary in \eqref{eq:bilin_form} we need to know which nodes are on the boundary. It is natural to keep the list of the elements and the boundary surfaces separate, and adding the contribution from each integral in separate loops in the program. The linear basis functions $\varphi$ represents a plane in $\mathbb{R}^4$, however as each surface element is a triangle, we only have three points for the system \eqref{eq:coeff_sys}. The last point can be chosen arbitrarily,  but in order to avoid problems with linear dependence in the row space of \eqref{eq:coeff_sys}, it is easiest to choose the last point outside of the domain $\Omega$. This what was done in this project.
+
+\subsection{The Dirichlet boundary}
+ The size of the linear system \eqref{eq:lin_sys} increases with the number of nodes in the mesh, it is important to keep the number of dimensions in system to a minimum. Since the solution on the Dirichlet boundary $\partial\Omega_D$ are known by definition, these nodes need not be in the vector $\vb{u}$ in \eqref{eq:lin_sys}. Instead the contribution in each row corresponding to $u_i$, where $\vb{x}_i \notin \partial\Omega_D$, can be moved to the right-hand side of the system, reducing the dimension by the number of nodes on $\partial\Omega_D$. We refer to the code as of how this was done.
+
+ Because of the nodal basis, the integrals in \eqref{eq:bilin_form} will be zero between all non-neighboring nodes, and as a result the matrix $A$ will be sparse. However, as the finite elements works by updating $A$ and $b$ in \eqref{eq:lin_sys} while looping over all the elements, it is not known beforehand which entries of $A$ and $b$ which will be non-zero. Using \textsc{Matlab}'s\xspace \texttt{sparse} functionality was therefore not beneficial in our case. On the contrary we do not reject the possibility that there may be other ways to take advantage of the sparsity of the matrix $A$.
