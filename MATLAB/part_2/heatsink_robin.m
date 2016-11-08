@@ -1,4 +1,4 @@
-clc; close all; clear all;
+clc; close all;
 % Select mesh
 meshopts = {'heatsink4_h105_gmf005','heatsink4_h205_gmf005','heatsink8_h105_gmf005','heatsink8_h205_gmf005'};
 [Selection, status] = listdlg('PromptString','Select mesh',...
@@ -52,7 +52,7 @@ edge_r_z = edge(edge_r_ind_z,:);
 % Enfore Robin boundary condition
 for i = 1:length(edge_r_z)
     k = edge_r_z(i,:); % Current triangle on the Robin boundary
-    phi_sys = [[p(k,:); zeros(1,nd)] ones(np, 1)];
+    phi_sys = [[p(k,:); -ones(1,nd)] ones(np, 1)];
     coeff_mat = phi_sys\eye(np); % Collumn i is [a_i; b_i; c_i; d_i]
     coeff_mat(:,np) = [];
     phi = @(x,y,z) ([x y z 1]*coeff_mat)'; % phi vector
