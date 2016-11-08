@@ -1,7 +1,7 @@
 % !TEX root = ../main/main.tex
 \section{Numerical implementation}
 \subsection{Basis functions}
-The choice of the type of basis functions is important when implementing the finite element method. In this project we have settled for the simplest type, namely the linear type. In higher dimensions one would usually resort to reference functions in a reference space, however for linear basis functions looking at the physical space is "cool". The linear functions in $\mathbb{R}^3$ is of the form
+The choice of the type of basis functions is important when implementing the finite element method. In this project we have settled for the simplest type, namely the linear type. In higher dimensions one would usually resort to reference functions in a reference space, however for linear basis functions looking at the physical space is enough. The linear functions in $\mathbb{R}^3$ is of the form
 \begin{equation}
 	\varphi_i(x,y,z) = a_ix + b_iy + c_iz + d_i,
 \end{equation}
@@ -32,7 +32,7 @@ where the index $i$ refers to the node. In a nodal basis we want $\varphi_i(\vb{
 \subsection{The numerical integrals}
 $a(u,v)$ in \eqref{eq:bilin_form} contains a the gradient of the basis functions $\varphi$. However because of the linearity of the basis functions this integral will be simply be the the volume of each element, multiplied by a constant. Let $\pmb{\varphi}(\vb{x}) = \left(\varphi_1(\vb{x}),\dots,\varphi_4(\vb{x})\right)^T$ be the vector of basis function on an element $\mathcal{K}$. Then each entry in the symmetric matrix
 \begin{equation}
-    \pmb{J}_{\pmb{\varphi}}\pmb{J}_{\pmb{\varphi}}^T\int_\mathcal{K} \! \mathrm{d}V
+    \pmb{J}_{\pmb{\varphi}}^{\phantom{}} \pmb{J}_{\pmb{\varphi}}^T\int_\mathcal{K} \! \mathrm{d}V
 \end{equation}
 represent the contribution from each combination of $\grad{\varphi_i}\cdot\grad{\varphi_j}$ on $\mathcal{K}$. Here $\pmb{J}_{\pmb{\varphi}}$ is the Jacobian of $\pmb{\varphi}$. The two remaining integrals in \eqref{eq:bilin_form} are surface integrals over the boundary of $\Omega$. We can use the function \texttt{quadrature2D} to integrate over planes in $\mathbb{R}^3$ by projecting down onto $\mathbb{R}^2$. Let $\vb{p}_1,\vb{p}_2,\vb{p}_3 \in \mathbb{R}^3$. The plane going through all three points have normal vector $\vb{n} = (\vb{p}_2-\vb{p}_1)\cross (\vb{p}_3-\vb{p}_1)$. Projecting down on the $xy$-plane then yields
 \begin{equation}
@@ -47,6 +47,8 @@ The whole boundary of the mesh consists of planes normal to the all the axes, so
 When calculating the contribution from the integrals over the boundary in \eqref{eq:bilin_form} we need to know which nodes are on the boundary. It is natural to keep the list of the elements and the boundary surfaces separate, and adding the contribution from each integral in separate loops in the program. The linear basis functions $\varphi$ represents a plane in $\mathbb{R}^4$, however as each surface element is a triangle, we only have three points for the system \eqref{eq:coeff_sys}. The last point can be chosen arbitrarily,  but in order to avoid problems with linear dependence in the row space of \eqref{eq:coeff_sys}, it is easiest to choose the last point outside of the domain $\Omega$. This what was done in this project.
 
 \subsection{The Dirichlet boundary}
- The size of the linear system \eqref{eq:lin_sys} increases with the number of nodes in the mesh, it is important to keep the number of dimensions in system to a minimum. Since the solution on the Dirichlet boundary $\partial\Omega_D$ are known by definition, these nodes need not be in the vector $\vb{u}$ in \eqref{eq:lin_sys}. Instead the contribution in each row corresponding to $u_i$, where $\vb{x}_i \notin \partial\Omega_D$, can be moved to the right-hand side of the system, reducing the dimension by the number of nodes on $\partial\Omega_D$. We refer to the code as of how this was done.
+ The size of the linear system \eqref{eq:lin_sys} increases with the number of nodes in the mesh, it is important to keep the number of dimensions in system to a minimum. Since the solution on the Dirichlet boundary $\partial\Omega_D$ is known by definition, these nodes need not be in the vector $\vb{u}$ in \eqref{eq:lin_sys}. Instead the contribution in each row corresponding to $u_i$, where $\vb{x}_i \notin \partial\Omega_D$, can be moved to the right-hand side of the system, reducing the dimension by the number of nodes on $\partial\Omega_D$. We refer to the code as of how this was done.
 
  Because of the nodal basis, the integrals in \eqref{eq:bilin_form} will be zero between all non-neighboring nodes, and as a result the matrix $A$ will be sparse. However, as the finite elements works by updating $A$ and $b$ in \eqref{eq:lin_sys} while looping over all the elements, it is not known beforehand which entries of $A$ and $b$ which will be non-zero. Using \textsc{Matlab}'s\xspace \texttt{sparse} functionality was therefore not beneficial in our case. On the contrary, we do not reject the possibility that there may be other ways to exploit the sparsity of $A$.
+
+ A heat sink has a geometry which is generally difficult to to model with a 3D mesh. The surface should be as large as possible in order to maximize contact with the surrounding air. The fins should therefore be as many and as thin as possible. Because of this, tetrahedral elements may not be optimal for the type of geometries considered in this report. For instance, Comsol \cite{comsol_mesh_types} recommends to use brick or prism elements in cases where the geometry consists of thin layers.
