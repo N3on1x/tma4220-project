@@ -42,7 +42,21 @@ The differential $\mathrm{d}\gamma$ on the plane then becomes
 \begin{equation}
     \mathrm{d}\gamma = \frac{\norm{\vb{n}}}{\abs{n_3}}\mathrm{d}x\mathrm{d}y.
 \end{equation}
-The whole boundary of the mesh consists of planes normal to the all the axes, so we actually need project onto both the $xz$- and $yz$-plane as well for the different parts of the boundary.
+The whole boundary of the mesh consists of planes normal to the all the axes, so we would actually need project onto both the $xz$- and $yz$-plane as well for the different parts of the boundary. Instead we rotate the mesh $\pi/4$ around both the $x$ and the $y$-axis, using the rotation matrix
+\begin{equation}
+    R_x\left(\frac{\pi}{2}\right)R_y\left(\frac{\pi}{2}\right) = \frac{1}{2}
+    \begin{bmatrix}
+        \sqrt{2} & 0 & 0 \\
+        0 & 1 & -1 \\
+        0 & 1 & 1
+     \end{bmatrix}
+     \begin{bmatrix}
+        1 & 0 & 1 \\
+        0 & \sqrt{2} & 0 \\
+        -1 & 0 & 1
+     \end{bmatrix},
+\end{equation}
+yielding no boundary surfaces being normal to the $xy$-plane.
 
 When calculating the contribution from the integrals over the boundary in \eqref{eq:bilin_form} we need to know which nodes are on the boundary. It is natural to keep the list of the elements and the boundary surfaces separate, and adding the contribution from each integral in separate loops in the program. The linear basis functions $\varphi$ represents a plane in $\mathbb{R}^4$, however as each surface element is a triangle, we only have three points for the system \eqref{eq:coeff_sys}. The last point can be chosen arbitrarily,  but in order to avoid problems with linear dependence in the row space of \eqref{eq:coeff_sys}, it is easiest to choose the last point outside of the domain $\Omega$. This what was done in this project.
 
@@ -51,4 +65,4 @@ When calculating the contribution from the integrals over the boundary in \eqref
 
  Because of the nodal basis, the integrals in \eqref{eq:bilin_form} will be zero between all non-neighboring nodes, and as a result the matrix $A$ will be sparse. However, as the finite elements works by updating $A$ and $b$ in \eqref{eq:lin_sys} while looping over all the elements, it is not known beforehand which entries of $A$ and $b$ which will be non-zero. Using \textsc{Matlab}'s\xspace \texttt{sparse} functionality was therefore not beneficial in our case. On the contrary, we do not reject the possibility that there may be other ways to exploit the sparsity of $A$.
 
- A heat sink has a geometry which is generally difficult to to model with a 3D mesh. The surface should be as large as possible in order to maximize contact with the surrounding air. The fins should therefore be as many and as thin as possible. Because of this, tetrahedral elements may not be optimal for the type of geometries considered in this report. For instance, Comsol \cite{comsol_mesh_types} recommends to use brick or prism elements in cases where the geometry consists of thin layers.
+ A heat sink has a geometry which is generally difficult to model with a 3D mesh. The surface should be as large as possible in order to maximize contact with the surrounding air. The fins should therefore be as many and as thin as possible. Because of this, tetrahedral elements may not be optimal for the type of geometries considered in this report. For instance, Comsol \cite{comsol_mesh_types} recommends to use brick or prism elements in cases where the geometry consists of thin layers.
