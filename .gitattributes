@@ -17,3 +17,4 @@
 *.pdf -crlf -diff -merge
 *.jpg -crlf -diff -merge
 *.png -crlf -diff -merge
+*.pptx -crlf -diff -merge
