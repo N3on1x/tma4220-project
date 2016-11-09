@@ -54,8 +54,9 @@ The volume of the simplex $\mathcal{K}$ is \cite{wiki_simplex}
 \begin{equation}
  	\operatorname{Volume}(\mathcal{K}) = \frac{1}{n!}\left|\operatorname{det}\left(\vb{p}_1-\vb{p}_0\,\dots\,\vb{p}_n-\vb{p}_0\right)\right|.
  \end{equation} 
-We also note that $\operatorname{Volume}(\mathcal{\hat{K}}) = 1/n!$. Each point in $\mathcal{K}$ can be described with a barycentric coordinate $\vb{\pmb{\lambda}} = \left(\lambda_0,\dots,\lambda_{n}\right)$, with the mapping to the physical space $\vb{x} = \lambda_0\vb{p}_0 + \dots + \lambda_n\vb{p}_n$. Given a set of $m$ barycentric quadrature points, $\vb{\pmb{\lambda}}_1,\dots,\vb{\pmb{\lambda}}_m$, and corresponding weights, $\rho_1,\dots,\rho_m$, the numerical integration formula becomes
+We also note that $\operatorname{Volume}(\mathcal{\hat{K}}) = 1/n!$. Each point in $\mathcal{K}$ can be described with a barycentric coordinate $\vb{\pmb{\lambda}} = \left(\lambda_0,\dots,\lambda_{n}\right)$, with the mapping to the physical space $\vb{x} = \lambda_0\vb{p}_0 + \dots + \lambda_n\vb{p}_n$. Given a set of $m$ barycentric quadrature points, $\vb{\pmb{\lambda}}^1,\dots,\vb{\pmb{\lambda}}^m$, and corresponding weights, $\rho_1,\dots,\rho_m$, the numerical integration formula becomes
 \begin{equation}
-	\int_{\mathcal{K}} \! f(\vb{x}) \, \mathrm{d}V \approx \operatorname{Volume}(\mathcal{K})\sum_{i = 1}^m
+	\int_{\mathcal{K}} \! f(\vb{x}) \, \mathrm{d}V \approx \operatorname{Volume}(\mathcal{K})\sum_{i = 1}^m \rho_m f(\lambda_0^i\vb{p}_0 +\dots + \lambda_n^i\vb{p}_n).
 \end{equation}
+The table of barycentric quadrature points used in the code can be found in \cite{tma4220}.
 %Where $k = \SI{401}{\watt\per\meter\per\kelvin}$ is the thermal conductivity of copper, and $h \approx 10$
