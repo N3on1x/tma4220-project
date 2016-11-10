@@ -36,13 +36,13 @@ $a(u,v)$ in \eqref{eq:bilin_form} contains the gradient of the basis functions $
 \end{equation}
 represent the contribution from each combination of $\grad{\varphi_i}\cdot\grad{\varphi_j}$ on $\mathcal{K}$. Here $\pmb{J}_{\pmb{\varphi}}$ is the Jacobian of $\pmb{\varphi}$. The two remaining integrals in \eqref{eq:bilin_form} are surface integrals over the boundary of $\Omega$. We can use the function \texttt{quadrature2D} to integrate over planes in $\mathbb{R}^3$ by projecting the surfaces down onto $\mathbb{R}^2$. Let $\vb{p}_1,\vb{p}_2,\vb{p}_3 \in \mathbb{R}^3$. The plane going through all three points have normal vector $\vb{n} = (\vb{p}_2-\vb{p}_1)\cross (\vb{p}_3-\vb{p}_1)$. Projecting down on the $xy$-plane then yields
 \begin{equation}
-    z = z(x,y)=\frac{1}{n_3}\left(\vb{n}\cdot \vb{p}_1-n_1x-n_2y\right).
+    z = z(x,y)=\frac{1}{n_3}\left(\vb{n}\cdot \vb{p}_1-n_1x-n_2y\right),
 \end{equation}
-The differential $\mathrm{d}\gamma$ on the plane then becomes
+and the differential $\mathrm{d}\gamma$ on the plane then becomes
 \begin{equation}
     \mathrm{d}\gamma = \frac{\norm{\vb{n}}}{\abs{n_3}}\mathrm{d}x\mathrm{d}y.
 \end{equation}
-The whole boundary of the mesh consists of planes normal to the all the axes, so we would actually need project onto both the $xz$- and $yz$-plane as well for different parts of the boundary. Instead we rotate the mesh $\pi/4$ around both the $x$ and the $y$-axis, using the rotation matrix
+The whole boundary of the mesh consists of planes normal to the all the axes, so we would actually need project onto both the $xz$- and $yz$-plane as well for different parts of the boundary. Instead we rotate the mesh by $\pi/4$ radians around both the $x$ and the $y$-axis, using the rotation matrix
 \begin{equation}
     R_x\left(\frac{\pi}{4}\right)R_y\left(\frac{\pi}{4}\right) = \frac{1}{2}
     \begin{bmatrix}

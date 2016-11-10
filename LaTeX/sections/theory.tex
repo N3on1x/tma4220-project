@@ -6,9 +6,9 @@ The heat equation of a material with thermal conductivity $k$ is given as
 	k\laplacian{u(\vb{x},t)} = \pdv{u(\vb{x},t)}{t}
 	\label{eq:gen_heat_eq},
 \end{equation}
-with the Dirichlet condition $u(\vb{x},t) = g(\vb{x},t)$ on the boundary, for some given function $g$. If we insetad look at the stationary case, the right hand side of \eqref{eq:gen_heat_eq} becomes zero. In addition if instead of looking at the inhomogenous Dirichlet boundary condition.
+with the inhomogeneous Dirichlet condition $u(\vb{x},t) = g(\vb{x},t)$ on the boundary. If we instead look at the stationary case, the right hand side of \eqref{eq:gen_heat_eq} becomes zero.
 
-Let $\Omega \subset \mathbb{R}^n$ be bounded, open set, and let $u(\vb{x})$ satisfy the boundary value problem 
+Let $\Omega \subset \mathbb{R}^n$ be bounded, and $u(\vb{x})$ satisfying the boundary value problem 
 
 \begin{alignat}{3}
 	\laplacian{u(\vb{x})} &= 0 &&,\quad u(\vb{x}) \in \Omega \\
