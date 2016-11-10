@@ -16,15 +16,15 @@ Let $\Omega \subset \mathbb{R}^n$ be bounded, open set, and let $u(\vb{x})$ sati
 	k\pdv{u(\vb{x})}{n} &= -h\left(u(\vb{x}) - u_{amb} \right) &&, \quad u(\vb{x}) \in \partial\Omega_R.
 	\label{eq:heat_bvp}
 \end{alignat}
-Here the temperature $u_0$ and the ambient temperature $u_{amb}$ are fixed, while $h$ is the heat transfer coefficient between two materials. $\partial\Omega_D$ and $\partial\Omega_R$ denotes the part Dirichlet and Robin part of the boundary $\partial\Omega = \partial\Omega_D\cup\Omega_R$, respectively. In the Robin boundary condition  $\vb{n}$ is the outward normal unit vector. The term $\pdv*{u}{n}$ is the heat flux, and is in this model proportional to the temperature difference between the ambient temperature and the solution. The minus sign emphasizes that the heat is flowing in the opposite direction of the temperature gradient, which is reasonable.
+Here the temperature $u_0$ and the ambient temperature $u_{amb}$ are fixed, while $h$ is the heat transfer coefficient between two materials. $\partial\Omega_D$ and $\partial\Omega_R$ denotes the Dirichlet and Robin part of the boundary $\partial\Omega = \partial\Omega_D\cup\Omega_R$, respectively. In the Robin boundary condition  $\vb{n}$ is the outward normal unit vector. The term $\pdv*{u}{n}$ is the heat flux, and is in this model proportional to the temperature difference between the ambient temperature and the solution. The minus sign emphasizes that the heat is flowing in the opposite direction of the temperature gradient, which is reasonable.
 
 \subsection{Weak form}
-The finite element method requires the PDE to to be formulated in terms of its weak form. We introduce the set of test functions $C_0^\infty(\Omega)$. This is the set of all infinitely differentiable functions with compact support in $\Omega$. $V = H_0^1(\Omega)$ is the usual Sobolov space. By Green's formula we have
+The finite element method requires the PDE to to be formulated in terms of its weak form. We introduce a set of test functions $C_0^\infty(\Omega)$. This is the set of all infinitely differentiable functions with compact support in $\Omega$. $V = H_0^1(\Omega)$ is the Sobolov space. By Green's formula we have
 \begin{equation}
 	\int_\Omega \! v\laplacian{u} \, \mathrm{d}\Omega = \int_{\partial\Omega} \! v\pdv{u}{n} \, \mathrm{d}\gamma -  \int_\Omega \! \grad{u}\cdot\grad{v} \, \mathrm{d}\Omega = 0
 	\label{eq:green}.
 \end{equation}
-The boundary integral is split up into the $\partial\Omega_D$ and $\partial\Omega_R$. If then $v \in V$, then the integral over $\partial\Omega_D$ vanishes and, by collecting terms, \eqref{eq:green} reduces to 
+The boundary integral is split up into the $\partial\Omega_D$ and $\partial\Omega_R$. Now if $v \in V$, the integral over $\partial\Omega_D$ vanishes, and after we rearrange the terms the equation reduces to 
 \begin{equation}
 	\frac{k}{h}\int_\Omega \! \grad{u}\cdot\grad{v} \, \mathrm{d}\Omega + \int_{\partial\Omega_R} \! uv\, \mathrm{d}\gamma = u_{amb}\int_{\partial\Omega_R} \! v \, \mathrm{d}\gamma.
 	\label{eq:weak_form}
@@ -37,7 +37,7 @@ From \eqref{eq:weak_form} we see that our bilinear form $a(\cdot,\cdot)$ and lin
 	F(v) &= u_{amb}\int_{\partial\Omega_R} \! v \, \mathrm{d}\gamma.
 	\label{eq:bilin_form}
 \end{align}
-Given a set of points $\left\{\vb{x}_i\right\}_{i=1}^n$ in $\Omega$, we now define a set of nodal functions $\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, such that $\varphi_i(\vb{x}_j) = \delta_{ij}$, $i,j = 1,\dots,n$. Now we define $V_h = \operatorname{span}\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, and let $u_h(\vb{x}) = \sum_{i=1}^{n} u_i \varphi_i(\vb{x}) \in V_h$. The Galerkin problem can now be formulated as "Find $u_h \in V_h$ such that $a(u_h,v) = F(v)\, \forall v \in V_h$". Since $a(\cdot,\cdot)$ is bilinear, $F(\cdot)$ is linear and $u_h$  is a linear combination of the basis functions $\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, this problem is equivalent to the linear system
+Given a set of points $\left\{\vb{x}_i\right\}_{i=1}^n$ in $\Omega$, we now define a set of nodal functions $\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, such that $\varphi_i(\vb{x}_j) = \delta_{ij}$, $i,j = 1,\dots,n$. Now we define $V_h = \operatorname{span}\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, and let $u_h(\vb{x}) = \sum_{i=1}^{n} u_i \varphi_i(\vb{x}) \in V_h$. The Galerkin problem can then be formulated as "Find $u_h \in V_h$ such that $a(u_h,v) = F(v)\, \forall v \in V_h$". Since $a(\cdot,\cdot)$ is bilinear, $F(\cdot)$ is linear and $u_h$  is a linear combination of the basis functions $\left\{\varphi_i(\vb{x})\right\}_{i=1}^n$, this problem is equivalent to the linear system %TODO: tungvindt å lese
 \begin{equation}
 	A\vb{u} = \vb{b}, \quad A_{ij} = a(\varphi_i,\varphi_j), \,\, b_i = F(\varphi_i)
 	\label{eq:lin_sys},
