@@ -65,8 +65,7 @@ When calculating the contribution from the integrals over the boundary in \eqref
 
  Because of the nodal basis, the integrals in \eqref{eq:bilin_form} will be zero between all non-neighboring nodes, and as a result the matrix $A$ will be sparse. However, as the finite elements works by updating $A$ and $b$ in \eqref{eq:lin_sys} while looping over all the elements, it is not known beforehand which entries of $A$ and $b$ which will be non-zero. Using \textsc{Matlab}'s\xspace \texttt{sparse} functionality was therefore not beneficial in our case. On the contrary, we do not reject the possibility that there may be other ways to exploit the sparsity of $A$.
 
- A heat sink has a geometry which is generally difficult to model with a 3D mesh. The surface should be as large as possible in order to maximize contact with the surrounding air. The fins should therefore be as many and as thin as possible. Because of this, tetrahedral elements may not be optimal for the type of geometries considered in this report. For instance, Comsol \cite{comsol_mesh_types} recommends to use brick or prism elements in cases where the geometry consists of thin layers.
-
+ %A heat sink has a geometry which is generally difficult to model with a 3D mesh. The surface should be as large as possible in order to maximize contact with the surrounding air. The fins should therefore be as many and as thin as possible.
 
 \subsection{Generating the mesh}
  For our purposes we did not need a complex geometry so we opted for a simple geometry for the heat sinks. To create and control the geometry as we wanted, we used the software \textit{Gmsh}. For practical reasons we chose the size of the heat sink base to be $1.05\times1.05$. For the height of the base and the thickness of the fins we chose 0.05 and 0.07. These values does not change through the experiment. What we varied was the number of fins and the height of the fins. We tried 4 and 8 fins and heights of 1.0 and 2.0.
