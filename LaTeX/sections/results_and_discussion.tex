@@ -5,31 +5,31 @@
  \begin{subfigure}[t] {0.23\textwidth}
  \centering
  \includegraphics[width=0.7\textwidth]{../figures/heatsink4_h105_gmf005.png}
- \caption{"Placeholder"}
- \label{fig:res_4_1}
+ \caption{4 fins, 1 height}
+ \label{fig:mesh_temps_res_4_1}
  \end{subfigure}
  ~
   \begin{subfigure}[t] {0.23\textwidth}
  \centering
  \includegraphics[width=0.7\textwidth]{../figures/heatsink8_h105_gmf005.png}
- \caption{"Placeholder"}
- \label{fig:res_8_1}
+ \caption{8 fins, 1 height}
+ \label{fig:mesh_temps_res_8_1}
  \end{subfigure}
  ~
  \begin{subfigure}[t] {0.23\textwidth}
  \centering
  \includegraphics[width=0.7\textwidth]{../figures/heatsink4_h205_gmf005.png}
- \caption{"Placeholder"}
- \label{fig:res_4_2}
+ \caption{4 fins, 2 height}
+ \label{fig:mesh_temps_res_4_2}
  \end{subfigure}
  ~
  \begin{subfigure}[t] {0.23\textwidth}
  \centering
  \includegraphics[width=0.7\textwidth]{../figures/heatsink8_h205_gmf005.png}
- \caption{"Placeholder"}
- \label{fig:res_8_2}
+ \caption{8 fins, 2 height}
+ \label{fig:mesh_temps_res_8_2}
  \end{subfigure}
- \caption{These are the different meshes we tried}
+ \caption{Temperatures in the middle of the heat sink for the different meshes.}
  \label{fig:mesh_temps}
  \end{figure}
  
@@ -38,3 +38,5 @@ Visualizing results from simulations is important in order to understand the res
 
 \subsection{Assumptions and Physical Interpretation}
 In our analysis we have made some assumptions and initial choices for the boundary conditions to make a somewhat simplified mathematical model. For the temperature of the bottom of the heat sink base we enforced a constant Dirichlet boundary condition of \SI{80}{\celsius} . This choice was made because it is an estimate of the temperature of a very warm processor working at maximum capacity. By enforcing Dirichlet boundary condition we disallow the hypothetical processor to actually cool down, which is not necessarily a realistic assumption. We would suggest that some kind of Neumann boundary condition would be better suited if you want to see a cooling effect. Another modeling choice made regarding the Robin conditions on the rest of the boundary is that the ambient temperature in the description of the boundary value problem \eqref{eq:heat_bvp} is also constant. This means that even in the tight spaces in between the fins the air temperature is constant. You could think of it as an average temperature on the boundary. One could maybe improve on this assumption by enforcing different ambient temperature on the outer boundary and the boundary in between the fins. Besides you would probably need a very powerful fan to transport the heat away to keep the ambient temperature at 20 degrees as assumed here. 
+
+In figure \ref{fig:mesh_temps} we can see the temperatures for the different meshes. The temperature ranges from about \SI{59}{\celsius} to \SI{80}{\celsius} for figure \ref{fig:mesh_temps_res_4_1} and \ref{fig:mesh_temps_res_8_1}, and from \SI{39}{\celsius} to \SI{80}{\celsius} for figure \ref{fig:mesh_temps_res_4_2} and \ref{fig:mesh_temps_res_8_2}. The temperature profiles along the fins are virtually identical between fins of the same height. The Dirichlet boundary works like a thermal reservoir.
