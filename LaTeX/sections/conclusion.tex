@@ -1,5 +1,9 @@
 % !TEX root = ../main/main.tex
-\section{Conclusion}
-This is the beginning of the conclusion. Here we will sum up the report and the results. Also we will suggest improvements for further work. I am personally very happy about the fact that I have started to write on this. The report is nearly finished, and just some minor work remains.
+\section{Conclusion and suggested next steps}
+The aim of this report has been to explore how to use FEM to solve the heat equation on a heat sink. We wanted to investigate how to the temperature is distributed in heat sinks with different design options. Two of the design options had 4 fins, the other two had 8. Heights of 1.0 and 2.0 were tested for each option as well.
 
-Sincerely \newline Nicolaj Nielsen
+Some modeling choices was made in this report. Among them were the Dirichlet boundary condition on the base of the heat sink, the Robin boundary condition on the rest of the heat sink, and the constant temperature for the air surrounding the heat sink. These choices are possible to improve upon to make a better physical model. We would suggest to do some further studies on how the surrounding air temperature differentiates in between the fins as the average temperature is believed to be higher in these areas than on the outermost boundary. 
+
+The results were found by solving the stationary heat equation on the geometry which was made in Gmsh for the purpose of this report. They would suggest that the design choice of having many fins has more effect than having fewer and higher fins.
+
+Lastly in this report are some suggestions for next steps in this FEM analysis. As already mentioned the physical model could be improved upon. Also a more realistic case would be with much thinner and many more fins. This would create some challenges with the mesh because the tetrahedral elements could become irregular. One way of improving on this is to use brick prism elements, referring to \cite{comsol_mesh_types}. A way to work around this problem is to use 2D meshing for the fins. It is believed that this would be appropriate for very thin fins. Another next step would be to include the time derivative in the equation to study how the heat is dissipated in respect to time.
