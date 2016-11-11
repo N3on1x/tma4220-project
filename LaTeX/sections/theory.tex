@@ -19,7 +19,7 @@ Let $\Omega \subset \mathbb{R}^n$ be bounded, and $u(\vb{x})$ satisfying the bou
 Here the temperature $u_0$ and the ambient temperature $u_{amb}$ are fixed, while $h$ is the heat transfer coefficient between two materials. $\partial\Omega_D$ and $\partial\Omega_R$ denotes the Dirichlet and Robin part of the boundary $\partial\Omega = \partial\Omega_D\cup\Omega_R$, respectively. In the Robin boundary condition  $\vb{n}$ is the outward normal unit vector. The term $\pdv*{u}{n}$ is the heat flux, and is in this model proportional to the temperature difference between the ambient temperature and the solution. The minus sign emphasizes that the heat is flowing in the opposite direction of the temperature gradient, which is reasonable.
 
 \subsection{Weak form}
-The finite element method requires the PDE to to be formulated in terms of its weak form. We introduce a set of test functions $C_0^\infty(\Omega)$. This is the set of all infinitely differentiable functions with compact support in $\Omega$. $V = H_0^1(\Omega)$ is the Sobolov space. By Green's formula we have
+The finite element method requires the PDE to to be formulated in terms of its weak form. We introduce a set of test functions $C_0^\infty(\Omega)$. This is the set of all infinitely differentiable functions with compact support in $\Omega$. $V = H_0^1(\Omega)$ is the usual Sobolov space. By Green's formula we have
 \begin{equation}
 	\int_\Omega \! v\laplacian{u} \, \mathrm{d}\Omega = \int_{\partial\Omega} \! v\pdv{u}{n} \, \mathrm{d}\gamma -  \int_\Omega \! \grad{u}\cdot\grad{v} \, \mathrm{d}\Omega = 0
 	\label{eq:green}.
