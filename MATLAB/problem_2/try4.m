@@ -33,7 +33,6 @@ for i = 1:size(edge)
 end
 
 u_h = A\b; % Solve the system
-
 x = p(:,1);
 y = p(:,2);
 
